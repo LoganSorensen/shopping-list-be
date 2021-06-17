@@ -1,8 +1,8 @@
 const router = require("express").Router();
-const { json } = require("body-parser");
 const mongoose = require("mongoose");
 
 const Item = require("../models/item");
+const Category = require("../models/category");
 
 // Get Items
 router.get("/", (req, res) => {
@@ -24,6 +24,33 @@ router.get("/", (req, res) => {
 
 // Add Item
 router.post("/", (req, res) => {
+  const category = new Category({
+    _id: new mongoose.Types.ObjectId(),
+    name: req.body.category,
+  });
+
+  Category.find()
+    .exec()
+    .then((docs) => {
+      const categories = [];
+      docs.forEach((doc) => {
+        categories.push(doc.name);
+      });
+      if (!categories.includes(req.body.category)) {
+        category.save();
+      }
+      // res.status(200).json(categories);
+    });
+
+  // category
+  //   .save()
+  //   .then((result) => {
+  //     res.status(201).json({ message: "yp" });
+  //   })
+  //   .catch((err) => {
+  //     console.log(err).json({ error: err });
+  //   });
+
   const item = new Item({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
