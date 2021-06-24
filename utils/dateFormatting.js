@@ -25,6 +25,6 @@ const [month, weekday, day, year] = [
 
 const formatMonthAndYear = () => `${months[month]} ${year}`;
 
-const formatDate = () => `${daysOfTheWeek[weekday]} ${month}.${day}.${year}`
+const formatDate = () => `${daysOfTheWeek[weekday]} ${month}.${day}.${year}`;
 
 module.exports = { formatMonthAndYear, formatDate };

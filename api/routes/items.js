@@ -6,7 +6,6 @@ const Category = require("../models/category");
 
 // Get Items
 router.get("/", (req, res) => {
-
   const categories = [];
 
   Category.find()
@@ -14,8 +13,8 @@ router.get("/", (req, res) => {
     .then((docs) => {
       docs.forEach((doc) => {
         categories.push(doc.name);
+      });
     });
-  })
 
   Item.find()
     .select("-__v")

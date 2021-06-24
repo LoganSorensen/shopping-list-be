@@ -58,4 +58,19 @@ router.post("/", (req, res) => {
     });
 });
 
+// Get List By Id
+router.get("/:listId", (req, res) => {
+  const id = req.params.listId;
+  List.findById(id)
+    .select("-__v")
+    .exec()
+    .then((doc) => {
+      res.status(200).json(doc);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: err });
+    });
+});
+
 module.exports = router;
