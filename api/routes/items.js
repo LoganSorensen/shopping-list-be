@@ -6,12 +6,24 @@ const Category = require("../models/category");
 
 // Get Items
 router.get("/", (req, res) => {
+
+  const categories = [];
+
+  Category.find()
+    .exec()
+    .then((docs) => {
+      docs.forEach((doc) => {
+        categories.push(doc.name);
+    });
+  })
+
   Item.find()
     .select("-__v")
     .exec()
     .then((docs) => {
       const response = {
         count: docs.length,
+        categories: categories,
         items: docs,
       };
       res.status(200).json(response);
@@ -39,17 +51,7 @@ router.post("/", (req, res) => {
       if (!categories.includes(req.body.category)) {
         category.save();
       }
-      // res.status(200).json(categories);
     });
-
-  // category
-  //   .save()
-  //   .then((result) => {
-  //     res.status(201).json({ message: "yp" });
-  //   })
-  //   .catch((err) => {
-  //     console.log(err).json({ error: err });
-  //   });
 
   const item = new Item({
     _id: new mongoose.Types.ObjectId(),
@@ -65,6 +67,7 @@ router.post("/", (req, res) => {
       res.status(201).json({
         message: "item created successfully",
         createdItem: {
+          _id: result._id,
           name: result.name,
           category: result.category,
           note: result.note,

@@ -33,9 +33,11 @@ app.use((req, res, next) => {
 // Routers
 const itemRoutes = require("./api/routes/items");
 const categoryRoutes = require("./api/routes/categories");
+const listRoutes = require("./api/routes/lists");
 
 // Routes
 app.use("/items", itemRoutes);
 app.use("/categories", categoryRoutes);
+app.use("/lists", listRoutes);
 
 module.exports = app;
