@@ -65,6 +65,7 @@ router.get("/:listId", (req, res) => {
     .select("-__v")
     .exec()
     .then((doc) => {
+      // console.log(doc)
       res.status(200).json(doc);
     })
     .catch((err) => {
@@ -73,6 +74,22 @@ router.get("/:listId", (req, res) => {
     });
 });
 
+// Update List
+router.put("/:listId", (req, res) => {
+  const id = req.params.listId;
+
+  List.updateOne({ _id: id }, { $set: req.body })
+    .exec()
+    .then((doc) => {
+      res.status(200).json({ message: "List updated" });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: err });
+    });
+});
+
+// Delete List
 router.delete("/:listId", (req, res) => {
   const id = req.params.listId;
   List.remove({ _id: id })
