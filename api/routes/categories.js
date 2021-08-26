@@ -21,4 +21,18 @@ router.get("/", (req, res) => {
     });
 });
 
+// Delete a Category
+router.delete("/:categoryId", (req, res) => {
+  const id = req.params.categoryId;
+  Category.remove({ _id: id })
+    .exec()
+    .then(() => {
+      res.status(200).json({ message: "Category Deleted" });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: err });
+    });
+});
+
 module.exports = router;
